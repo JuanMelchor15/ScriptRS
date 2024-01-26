@@ -21,7 +21,6 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 exchange,
                                 transac
                         from	usinsug01.claim_his
-                        limit 100
                    ) AS TMP
                    '''   
 
@@ -52,7 +51,6 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 cpl.policy,
                                 cpl.certif
                         from	usinsug01.curren_pol cpl
-                        limit 100
                     )  AS TMP
                     '''
 
@@ -70,8 +68,7 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                             cov.certif,
                             cov.effecdate,
                             cov.nulldate
-                    from    usinsug01.cover cov 
-                    limit 100
+                    from    usinsug01.cover cov
                 )   AS TMP
                 ''' 
 
@@ -89,21 +86,19 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 nulldate,
                                 statregt,
                                 addsuini
-                    from   	usinsug01.gen_cover gco  
-                    limit 100
+                    from   	usinsug01.gen_cover gco
                   ) AS TMP
                   ''' 
 
     exchange = '''
                   (
-                    select	exc.exchange,
+                    select      exc.exchange,
                             exc.usercomp,
                             exc.company,
                             exc.currency,
                             exc.effecdate,
                             exc.nulldate
                     from 	usinsug01.exchange exc
-                    limit 100
                   ) AS TMP
                   '''
 
@@ -128,7 +123,6 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                             nulldate,
                             statusva
                     from	usinsug01.accident
-                    limit 500
                   ) AS TMP
                   '''
 
@@ -382,7 +376,6 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 cer.policy ,
                                 cer.certif
                         from 	usinsug01.certificat cer
-                        limit 100
                     )   AS TMP  
                     '''
 
@@ -428,7 +421,6 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 pol.branch,
                                 pol.policy
                         from    usinsug01.policy pol
-                        limit 100
                     )   AS TMP  
                     '''
 
@@ -446,13 +438,6 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 cla.compdate,
                                 cla.causecod
                         from usinsug01.claim cla 
-                    )   AS TMP  
-                    '''
-
-    table140 = '''
-                    (
-                        select	codigint
-                        from	usinsug01.table140
                     )   AS TMP  
                     '''
 
@@ -491,7 +476,27 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                     '''
 
 
-
-
-
-
+# Iterate over tablas
+    for tabla in config_dominio:
+                
+        df_result = glue_context.read.format('jdbc').options(**connection).option("dbtable", locals()[tabla['var']]).load() # read.execute_query(glue_context, connection, locals()[tabla['var']])
+     
+        # Verificar si el DataFrame está en caché antes de cachearlo
+        if not df_result.is_cached:
+            df_result.cache()
+            
+        #Trasformar a bit escrito en formato parquet
+        L_BUFFER = io.BytesIO()
+        df_result.toPandas().to_parquet(L_BUFFER, index=False)
+        L_BUFFER.seek(0)
+        
+        # Escribir el objeto Parquet en S3
+        s3_client.put_object(
+            Bucket = bucketName,
+            Key = tabla['name'],
+            Body=L_BUFFER.read()
+        )
+        
+        # Liberar la caché después de procesar la tabla
+        df_result.unpersist()
+    
