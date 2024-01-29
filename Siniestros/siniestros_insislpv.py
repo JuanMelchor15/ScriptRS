@@ -1,14 +1,5 @@
 def generate_siniestros_parquets(bucketName, config_dominio, glue_context, connection, s3_client, io):
 
-    policy = '''
-                    (
-                        select 	p.ctid,
-                                p."POLICY_ID" ,
-                                p."INSR_END", 
-                                p."ATTR1" 
-                        from 	usinsiv01."POLICY" p 
-                    ) AS TMP
-                    '''
 
     policy_eng_policies = '''
                     (
@@ -40,8 +31,8 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 "POLICY_ID" ,
                                 "OBJECT_ID" ,
                                 "INSURED_VALUE",
-                                "INSR_BEGIN",
-                                "INSR_END"
+                                cast (cast ("INSR_BEGIN" as date) as varchar),
+                                cast (cast ("INSR_END"as date) as varchar)
                         from	usinsiv01."INSURED_OBJECT"
                     ) AS TMP
                     '''
@@ -49,7 +40,7 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
     gen_annex = '''
                     (
                         select  ann."POLICY_ID",	
-                                ann."INSR_BEGIN",
+                                cast (cast (ann."INSR_BEGIN" as date) as varchar),
                                 ann."ANNEX_TYPE",
                                 ann."POLICY_ID",
                                 ann."ANNEX_STATE"
@@ -58,25 +49,37 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                     '''
 
     claim_reserve_history = '''
-                    (
-                        select	"CLAIM_ID",
-                                "OP_TYPE",
-                                "REGISTRATION_DATE",
-                                "REQUEST_ID"
-                        from	usinsiv01."CLAIM_RESERVE_HISTORY"
-                    ) AS TMP
-                    '''
+                                (
+                                    select	"CLAIM_ID",
+                                            "OP_TYPE",
+                                            cast (cast ("REGISTRATION_DATE" as date) as varchar),
+                                            "REQUEST_ID"
+                                    from	usinsiv01."CLAIM_RESERVE_HISTORY"           
+                                ) AS TMP
+                                '''
 
     claim = '''
                     (
                         select 	c.ctid,
                                 c."CLAIM_ID" ,
                                 c."POLICY_ID" ,
-                                c."EVENT_DATE" ,
+                                cast (cast (c."EVENT_DATE"as date) as varchar) ,
                                 c."CLAIM_REGID"
                         from  	usinsiv01."CLAIM" c 
                     ) AS TMP
                     '''
+
+    policy = '''
+                    (
+                        select 	p.ctid,
+                                p."POLICY_ID" ,
+                                cast (cast (p."INSR_END"as date) as varchar), 
+                                p."ATTR1" 
+                        from 	usinsiv01."POLICY" p 
+                    ) AS TMP
+                    '''
+
+
 
     claim_objects = '''
                     (
@@ -86,6 +89,8 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                         from usinsiv01."CLAIM_OBJECTS" co
                     ) AS TMP
                     '''
+
+
 
 # Iterate over tablas
     for tabla in config_dominio:
