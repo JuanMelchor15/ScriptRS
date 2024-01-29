@@ -2,7 +2,7 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
 
     claim_his = '''
                     (
-                        select	"DOPERDATE",
+                        select	cast (cast ("DOPERDATE" as date) as varchar),
                                 "NCLAIM",
                                 "NOPER_TYPE",
                                 "NCASE_NUM" ,
@@ -46,8 +46,8 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 cov."NPRODUCT" ,
                                 cov."NPOLICY" ,
                                 cov."NCERTIF" ,
-                                cov."DEFFECDATE" ,
-                                cov."DNULLDATE"
+                                cast (cast (cov."DEFFECDATE" as date) as varchar) ,
+                                cast (cast (cov."DNULLDATE" as date) as varchar)
                         from    usvtimv01."COVER" cov
                     ) AS TMP
                     '''
@@ -58,8 +58,8 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 lif."NPRODUCT" ,
                                 lif."NMODULEC",
                                 lif."NBRANCH" ,
-                                lif."DEFFECDATE" ,
-                                lif."DNULLDATE" ,
+                                cast (cast (lif."DEFFECDATE" as date) as varchar) ,
+                                cast (cast (lif."DNULLDATE" as date) as varchar) ,
                                 lif."SSTATREGT" ,
                                 lif."SADDSUINI"
                         from 	usvtimv01."LIFE_COVER" lif
@@ -72,11 +72,11 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 gen."NPRODUCT" ,
                                 gen."NMODULEC" ,
                                 gen."NBRANCH" ,
-                                gen."DEFFECDATE" ,
-                                gen."DNULLDATE" ,
+                                cast (cast (gen."DEFFECDATE" as date) as varchar) ,
+                                cast (cast (gen."DNULLDATE" as date) as varchar) ,
                                 gen."SSTATREGT" ,
                                 gen."SADDSUINI" 
-                        from    usvtimv01."GEN_COVER" gen   
+                        from    usvtimv01."GEN_COVER" gen    
                     ) AS TMP
                     '''
 
@@ -88,10 +88,10 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 coi."NPRODUCT" ,
                                 coi."NPOLICY" ,
                                 coi."NCOMPANY" ,
-                                coi."DEFFECDATE" ,
-                                coi."DNULLDATE" ,
+                                cast (cast (coi."DEFFECDATE" as date) as varchar)  ,
+                                cast (cast (coi."DNULLDATE"as date) as varchar),
                                 coi."NCOMPANY" 
-                        from	usvtimv01."COINSURAN" coi  
+                        from	usvtimv01."COINSURAN" coi
                     ) AS TMP
                     '''
 
@@ -121,13 +121,18 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
 
     claim = '''
                     (
-                        select  cpl."NCURRENCY",
-                                cpl."SCERTYPE" ,
-                                cpl."NBRANCH" ,
-                                cpl."NPRODUCT",
-                                cpl."NPOLICY" ,
-                                cpl."NCERTIF" 
-                        from    usvtimv01."CLAIM" cpl
+                        select 	cla.ctid,
+                                cla."NCLAIM",
+                                cla."SCERTYPE",
+                                cla."NPOLICY",
+                                cla."NBRANCH",
+                                cla."SSTACLAIM",
+                                cla."NPRODUCT",
+                                cla."NCERTIF",
+                                cast (cast (cla."DOCCURDAT" as date) as varchar),
+                                cla."SCLIENT",
+                                cla."NCAUSECOD"
+                        from 	usvtimv01."CLAIM" cla
                     ) AS TMP
                     '''
 

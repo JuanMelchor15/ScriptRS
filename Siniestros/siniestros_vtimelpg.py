@@ -2,7 +2,7 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
 
     claim_his = '''
                     (
-                        select	"DOPERDATE",
+                        select	cast (cast ( "DOPERDATE" as date ) as varchar) ,
                                 "NCLAIM",
                                 "NOPER_TYPE",
                                 "NCASE_NUM" ,
@@ -47,8 +47,8 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 cov."NPRODUCT",
                                 cov."NPOLICY",
                                 cov."NCERTIF",
-                                cov."DEFFECDATE",
-                                cov."DNULLDATE",
+                                cast (cast (cov."DEFFECDATE" as date) as varchar),
+                                cast (cast ( cov."DNULLDATE" as date) as varchar) ,
                                 cov."NCOVER",
                                 cov."NMODULEC",
                                 cov."NBRANCH"
@@ -62,8 +62,8 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 gen."NPRODUCT",
                                 gen."NMODULEC",
                                 gen."NBRANCH",
-                                gen."DEFFECDATE",
-                                gen."DNULLDATE",
+                                cast (cast (gen."DEFFECDATE" as date) as varchar),
+                                cast (cast ( gen."DNULLDATE" as date) as varchar),
                                 gen."SSTATREGT",
                                 gen."SADDSUINI"
                         from 	usvtimg01."LIFE_COVER" gen
@@ -78,8 +78,8 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 coi."NPRODUCT",
                                 coi."NPOLICY",
                                 coi."NCOMPANY",
-                                coi."DEFFECDATE",
-                                coi."DNULLDATE",
+                                cast (cast (coi."DEFFECDATE"as date ) as varchar),
+                                cast (cast (coi."DNULLDATE" as date ) as varchar),
                                 coi."NCOMPANY"
                         from	usvtimg01."COINSURAN" coi
                     ) AS TMP
@@ -120,7 +120,7 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 cla."SSTACLAIM",
                                 cla."NPRODUCT",
                                 cla."NCERTIF",
-                                cla."DOCCURDAT",
+                                cast (cast (cla."DOCCURDAT"as date ) as varchar),
                                 cla."SCLIENT",
                                 cla."NCAUSECOD"
                         from 	usvtimg01."CLAIM" cla

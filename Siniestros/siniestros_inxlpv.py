@@ -52,6 +52,7 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 cov.effecdate,
                                 cov.nulldate
                         from    usinsuv01.cover cov
+                        limit 11000000
                     ) AS TMP
                     '''
                         
@@ -202,7 +203,9 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
 # Iterate over tablas
     for tabla in config_dominio:
                 
-        df_result = glue_context.read.format('jdbc').options(**connection).option("dbtable", locals()[tabla['var']]).load() # read.execute_query(glue_context, connection, locals()[tabla['var']])
+        df_result = glue_context.read.format('jdbc').options(**connection).option("fetchsize", 10000).option("dbtable", locals()[tabla['var']]).load() # read.execute_query(glue_context, connection, locals()[tabla['var']])
+
+        df_result = df_result.repartition(10)
      
         # Verificar si el DataFrame está en caché antes de cachearlo
         if not df_result.is_cached:

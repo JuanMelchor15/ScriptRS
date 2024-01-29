@@ -31,16 +31,6 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                   ) AS TMP
                   '''
 
-    tab_cl_ope = '''
-                    (
-                       select	operation,
-                                reserve,
-                                ajustes,
-                                pay_amount
-                        from	usinsug01.tab_cl_ope 
-                    ) AS TMP  
-                    ''' 
-
     curren_pol = '''
                     (
                         select	cpl.currency,
