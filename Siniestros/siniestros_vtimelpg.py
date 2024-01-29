@@ -50,8 +50,7 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 cast (cast (cov."DEFFECDATE" as date) as varchar),
                                 cast (cast ( cov."DNULLDATE" as date) as varchar) ,
                                 cov."NCOVER",
-                                cov."NMODULEC",
-                                cov."NBRANCH"
+                                cov."NMODULEC"
                         from    usvtimg01."COVER" cov
                     ) AS TMP
                     '''
@@ -79,8 +78,7 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                                 coi."NPOLICY",
                                 coi."NCOMPANY",
                                 cast (cast (coi."DEFFECDATE"as date ) as varchar),
-                                cast (cast (coi."DNULLDATE" as date ) as varchar),
-                                coi."NCOMPANY"
+                                cast (cast (coi."DNULLDATE" as date ) as varchar)
                         from	usvtimg01."COINSURAN" coi
                     ) AS TMP
                     '''
