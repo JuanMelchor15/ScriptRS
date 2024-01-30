@@ -22,12 +22,12 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                         select 	p.ctid,
                                 p."NRECEIPT" ,
                                 p."NDIGIT" ,
-                                p."DEXPIRDAT" ,
-                                p."DNULLDATE" ,
+                                cast (cast (p."DEXPIRDAT" as date) as varchar) ,
+                                cast (cast (p."DNULLDATE"as date) as varchar) ,
                                 p."SSTATUSVA" ,
                                 p."SCERTYPE" ,
                                 p."NPOLICY" ,
-                                p."DEFFECDATE",
+                                cast (cast (p."DEFFECDATE" as date) as varchar),
                                 p."NPRODUCT" ,
                                 p."NBRANCH" 
                         from usvtimg01."PREMIUM" p 
@@ -40,7 +40,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 c."NBRANCH" ,
                                 c."NPOLICY" ,
                                 c."NCERTIF" ,
-                                c."DOCCURDAT" ,
+                                cast (cast (c."DOCCURDAT" as date) as varchar),
                                 c."SSTACLAIM" ,
                                 c."NBRANCH" ,
                                 c."NPOLICY" 
@@ -70,9 +70,9 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 c."NPRODUCT" ,
                                 c."NPOLICY" ,
                                 c."NCOMPANY" ,
-                                c."DEFFECDATE" ,
-                                c."DNULLDATE" ,
-                                c."DCOMPDATE" ,
+                                cast (cast (c."DEFFECDATE" as date) as varchar),
+                                cast (cast (c."DNULLDATE" as date) as varchar),
+                                cast (cast (c."DCOMPDATE" as date) as varchar),
                                 c."NCOMPANY" ,
                                 c."NSHARE" 
                         from usvtimg01."COINSURAN" c 
@@ -84,7 +84,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                         select  P.ctid,
                                 p."NPRODUCT" ,
                                 p."NLEADSHARE" ,
-                                p."DCOMPDATE" ,
+                                cast (cast (p."DCOMPDATE"  as date) as varchar),
                                 p."SCERTYPE" ,
                                 p."SBUSSITYP" ,
                                 p."NPOLICY" ,
@@ -105,7 +105,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                     (
                         select 	ch."NCLAIM" ,
                                 ch."NOPER_TYPE" ,
-                                ch."DOPERDATE" ,
+                                cast (cast (ch."DOPERDATE"  as date) as varchar),
                                 ch."NCASE_NUM" ,
                                 ch."NDEMAN_TYPE" ,
                                 ch."NTRANSAC" ,
@@ -147,8 +147,8 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 REI."NCERTIF" ,
                                 REI."NBRANCH_REI" ,
                                 REI."NTYPE_REIN" ,
-                                REI."DEFFECDATE",
-                                REI."DNULLDATE"
+                                cast (cast (REI."DEFFECDATE" as date) as varchar),
+                                cast (cast (REI."DNULLDATE"as date) as varchar)
                         from	usvtimg01."REINSURAN" REI
                     ) AS TMP
                     '''
@@ -162,8 +162,8 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 cov."NBRANCH" ,
                                 cov."SCERTYPE" ,
                                 cov."NCERTIF" ,
-                                cov."DEFFECDATE" ,
-                                cov."DNULLDATE" 
+                                cast (cast (cov."DEFFECDATE" as date) as varchar) ,
+                                cast (cast (cov."DNULLDATE" as date) as varchar)
                         from   usvtimg01."COVER" cov
                     ) AS TMP
                     '''
@@ -174,8 +174,8 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 lc."NPRODUCT" ,
                                 lc."NMODULEC" ,
                                 lc."NBRANCH" ,
-                                lc."DEFFECDATE" ,
-                                lc."DNULLDATE" ,
+                                cast (cast (lc."DEFFECDATE" as date) as varchar),
+                                cast (cast (lc."DNULLDATE"as date) as varchar) ,
                                 lc."SSTATREGT" ,
                                 lc."NBRANCH_LED" ,
                                 lc."NBRANCH_REI" 
@@ -189,8 +189,8 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 gen ."NPRODUCT" ,
                                 gen."NMODULEC" ,
                                 gen."NBRANCH" ,
-                                gen."DEFFECDATE" ,
-                                gen."DNULLDATE" ,
+                                cast (cast (gen."DEFFECDATE" as date) as varchar) ,
+                                cast (cast (gen."DNULLDATE"as date) as varchar) ,
                                 gen."SSTATREGT" ,
                                 gen."NBRANCH_LED" ,
                                 gen."NCOVERGEN" 
@@ -200,7 +200,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
 
     certificat = '''
                     (
-                        select	cer."DDATE_ORIGI" ,
+                        select	cast (cast (cer."DDATE_ORIGI"as date) as varchar) ,
                                 cer."SCERTYPE" ,
                                 cer."NBRANCH" ,
                                 cer."NPOLICY" ,
@@ -220,7 +220,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
 
     premium_mo = '''
                     (
-                        select	"DSTATDATE",
+                        select	cast (cast ("DSTATDATE" as date) as varchar),
                                 "NRECEIPT",
                                 "NDIGIT" ,
                                 "NTYPE" 
@@ -250,7 +250,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 cnm ."NBRANCH" ,
                                 cnm ."NTYPE" ,
                                 cnm ."NTYPE_REL" ,
-                                cnm ."DSTARTDATE" 
+                                cast (cast (cnm ."DSTARTDATE" as date) as varchar)
                         from usvtimg01."CONTRMASTER" cnm
                     ) AS TMP
                     '''
@@ -260,8 +260,8 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                         select 	pcr."NTYPE_REL" ,
                                 pcr."NNUMBER" ,
                                 pcr ."NBRANCH" ,
-                                pcr."DSTARTDATE" ,
-                                pcr."DNULLDATE" ,
+                                cast (cast (pcr."DSTARTDATE" as date) as varchar) ,
+                                cast (cast (pcr."DNULLDATE" as date) as varchar) ,
                                 pcr."NTYPE" ,
                                 pcr."NCOMPANY" ,
                                 pcr."NCOMISION" ,

@@ -95,9 +95,9 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                     bdo."DOC_NUMBER" ,
                                     bdo."DOC_TYPE_ID" ,
                                     bdo."REF_DOC_ID" ,
-                                    bdo."ISSUE_DATE" ,
-                                    bdo."DUE_DATE" ,
-                                    bdo."DOC_SUFFIX" ,
+                                    cast ( cast (bdo."ISSUE_DATE" as date) as varchar) ,
+                                    cast ( cast (bdo."DUE_DATE" as date) as varchar),
+                                    bdo."DOC_SUFFIX"
                             from USINSIV01."BLC_DOCUMENTS" bdo
                         ) AS TMP
                         '''
@@ -197,7 +197,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
 
     blc_actions = '''
                         (
-                            SELECT  B."ACTION_DATE",
+                            SELECT  cast (cast ( B."ACTION_DATE" as date) as varchar),
                                     B."DOCUMENT_ID",
                                     B."ATTRIB_0",
                                     B."ACTION_TYPE_ID"	
