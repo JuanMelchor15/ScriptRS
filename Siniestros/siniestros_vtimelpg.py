@@ -12,7 +12,7 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                     ) AS TMP
                     '''
 
-    tabla40 = '''
+    table140 = '''
                     (
                         select	"NOPER_TYPE"
                         from	usvtimg01."TABLE140"

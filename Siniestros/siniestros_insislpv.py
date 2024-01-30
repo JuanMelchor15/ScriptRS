@@ -42,7 +42,6 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                         select  ann."POLICY_ID",	
                                 cast (cast (ann."INSR_BEGIN" as date) as varchar),
                                 ann."ANNEX_TYPE",
-                                ann."POLICY_ID",
                                 ann."ANNEX_STATE"
                         from    usinsiv01."GEN_ANNEX" ann
                     ) AS TMP
