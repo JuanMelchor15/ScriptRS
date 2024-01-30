@@ -1,4 +1,4 @@
-def generate_siniestros_parquets(bucketName, config_dominio, glue_context, connection, s3_client, io):
+def generate_recibos_parquets(bucketName, config_dominio, glue_context, connection, s3_client, io):
 
     detail_pre = '''
                     (
@@ -163,6 +163,15 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                     ) AS TMP
                     '''
 
+    claim_pay_sap = '''
+                    (
+                        select 	csp.transac,
+                                csp.claim,
+                                csp.transac_pay 
+                        from	usinsug01.claim_pay_sap csp
+                    ) AS TMP
+                    '''
+
     wbstblclidepequi = '''
                     (
                         select	sclient_vig,
@@ -279,7 +288,7 @@ def generate_siniestros_parquets(bucketName, config_dominio, glue_context, conne
                     ) AS TMP
                     '''
 
-    table173 = '''
+    contr_comp = '''
                     (
                         select 	ctp.ctid,
                                 ctp.usercomp ,
