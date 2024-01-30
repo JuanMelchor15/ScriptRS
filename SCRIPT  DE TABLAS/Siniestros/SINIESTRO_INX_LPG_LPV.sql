@@ -1,512 +1,407 @@
---------SINIESTRO LPG INX
---33 TABLAS LPG
---13 TABLAS LPV
+
+-----RECIBOS INSUNIX
+--25 TABLAS G
+--19 TABLAS V
 
 ----LPG
 
-select	sub_product,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		product
-from	usinsug01.pol_subproduct
+select	dp.commision,
+		dp.usercomp,
+		dp.company ,
+		dp.receipt ,
+		dp.certif ,
+		dp.addsuini ,
+		dp.code,
+		dp.capital ,
+		dp.premium ,
+		dp.type_detai ,
+		dp.bill_item 
+from	usinsug01.detail_pre dp
 
-select	operdate,
-		claim,
-		oper_type,
-		exchange,
-		transac
-from	usinsug01.claim_his
+select 	aa.ctid,
+		aa.branch ,
+		aa.branch_pyg ,
+		aa.branch_bal ,
+		aa.product ,
+		aa.concept_fac 
+from usinsug01.acc_autom2 aa 
 
+select 	p.ctid,
+		p.usercomp ,
+		p.company ,
+		p.receipt ,
+		P.product ,
+		p.branch ,
+		p.expirdat ,
+		p.nulldate ,
+		p.effecdate ,
+		p.statusva 
+from usinsug01.premium p 
 
-select	operation,
-		reserve,
-		ajustes,
-		pay_amount
-from	usinsug01.tab_cl_ope
+select 	ch.exchange ,
+		ch.claim ,
+		ch.transac,
+		ch.operdate,
+		ch.currency ,
+		ch.amount 
+from usinsug01.claim_his ch 
 
-select	cpl.currency,
-		cpl.usercomp,
-		cpl.company,
+select  cpl.currency,
+		cpl.usercomp ,
+		cpl.branch ,
+		cpl.certif,
 		cpl.certype,
-		cpl.branch,
-		cpl.policy,
-		cpl.certif
-from	usinsug01.curren_pol cpl
+		cpl.company,
+		cpl.policy
+from    usinsug01.curren_pol cpl
 
-select  cov.capital,
-		cov.currency,
-		cov.cover,
-		cov.modulec,
-		cov.usercomp,
-		cov.company,
-		cov.certype,
-		cov.branch,
-		cov.policy,
-		cov.certif,
-		cov.effecdate,
-		cov.nulldate
-from    usinsug01.cover cov
+select 	t10b.company ,
+		t10b.branch 
+from usinsug01.table10b t10b
 
-select 	ctid,
-		usercomp,
-		company,
-		branch,
-		product,
-		currency,
-		modulec,
-		cover,
-		effecdate,
-		nulldate,
-		statregt,
-		addsuini
-from   	usinsug01.gen_cover gco
+select c.staclaim, 
+	   c.branch ,
+	   c.usercomp ,
+	   c.company ,
+	   c."policy" ,
+	   c.certif ,
+	   c.client ,
+	   c.occurdat 
+from usinsug01.claim c 
 
+select 	t.codigint 
+from usinsug01.table140 t 
 
+select tco.operation , 
+	   tco.pay_amount 	
+from usinsug01.tab_cl_ope tco 
+
+select 	p.certype ,
+		p.usercomp ,
+		p.company ,
+		p.branch ,
+		p."policy" ,
+		p.bussityp ,
+		p.date_origi ,
+		p.compdate ,
+		p.leadshare 
+from usinsug01."policy" p 
+
+select 	cmc.usercomp ,
+		cmc .claim ,
+		cmc .company ,
+		cmc .movement ,
+		cmc .amount ,
+		cmc .currency 
+from usinsug01.cl_m_cover cmc 
+
+select 	c.usercomp ,
+		c.company ,
+		c.certype ,
+		c.branch ,
+		c.compdate ,
+		c."policy" ,
+		c.effecdate ,
+		c.nulldate ,
+		c.companyc ,
+		c."share" ,
+		c.compdate
+from usinsug01.coinsuran c 
 
 select	exc.exchange,
 		exc.usercomp,
-		exc.company,
-		exc.currency,
-		exc.effecdate,
-		exc.nulldate
+		exc.company ,
+		exc.currency ,
+		exc.effecdate ,
+		exc.nulldate 
 from 	usinsug01.exchange exc
 
+select 	csp.transac,
+		csp.claim,
+		csp.transac_pay 
+from	usinsug01.claim_pay_sap csp
 
-select tabname,
-	   branch
-from usinsug01.tab_name_b
+select	sclient_vig,
+		sclient_old 
+from	usinsug01.wbstblclidepequi
 
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.accident
+select	evi.scod_vt,
+		evi.scod_inx
+from	usinsug01.equi_vt_inx evi 
 
 
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.auto_peru
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.civil 
-
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.credit 
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.deshones 
-
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.eqele_peru 
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.fire_lc 
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.fire_peru 
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.health 
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.machine 
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.machine_lc
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.risk_3d
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.ship
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.theft
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.transport
-
-
-select	ctid,
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate,
-		statusva
-from	usinsug01.trec
-
-select	cer.statusva,
-		cer.usercomp,
-		cer.company,
+select	cer.date_origi,
+		cer.usercomp, 
+		cer.company ,
 		cer.certype ,
 		cer.branch ,
 		cer.policy ,
-		cer.certif
-from 	usinsug01.certificat cer
-
-
-select	coi.share,
-		coi.usercomp, 
-		coi.company,
-		coi.certype ,
-		coi.branch ,
-		coi.policy ,
-		coi.effecdate ,
-		coi.nulldate ,
-		coi.companyc
-from	usinsug01.coinsuran coi
+		cer.certif,
+		cer.date_origi
+from 	usinsug01.certificat cer  
 
 select  rei.share,
-		rei.usercomp,
-		rei.company,
-		rei.certype,
-		rei.branch,
-		rei.policy,
-		rei.certif,
+		rei.usercomp ,
+		rei.company ,
+		rei.certype ,
+		rei.branch ,
+		rei.policy ,
+		rei.certif ,
 		rei.effecdate,
-		rei.nulldate,
+		rei.nulldate ,
 		rei.type
 from    usinsug01.reinsuran rei
 
+select	sub_product,
+		usercomp ,
+		company,
+		certype ,
+		branch ,
+		policy ,
+		product
+from	usinsug01.pol_subproduct
 
-select 	pol.ctid,
-		pol.certype,
-		pol.bussityp,
-		pol.leadshare,
-		pol.usercomp,
-        pol.company,
-        pol.branch,
-        pol.policy
-from    usinsug01.policy pol
-
-
-select 	cla.claim,
-		cla.usercomp,
-       	cla.company,
-       	cla.branch,
-       	cla.certif,
-       	cla.client,
-       	cla.policy,
-       	cla.occurdat,
-       	cla.staclaim,
-       	cla.compdate,
-       	cla.causecod
-from usinsug01.claim cla 
-
-
-select	codigint
-from	usinsug01.table140
-
-select 	operation,
-		reserve,
-		pay_amount,
-		ajustes
-from	usinsug01.tab_cl_ope
-
-select  clm.cover ,
-		clm.currency ,
-		clm.amount ,
-		clm.usercomp ,
-		clm.company ,
-		clm.claim ,
-		clm.movement 
-from 	usinsug01.cl_m_cover clm 	
-
-select  bene_code,
+select 	num_case,
 		usercomp,
 		company ,
-		claim ,
-		bene_type
-from    usinsug01.claimbenef
+		claim 
+from	usinsug01.claim_case
+
+select	gco.ctid,
+		gco.bill_item ,
+		gco.usercomp,
+		gco.company,
+		gco.branch,
+		gco.product,
+		gco.currency,
+		gco.modulec,
+		gco.cover,
+		gco.effecdate,
+		gco.nulldate,
+		gco.statregt
+from	usinsug01.gen_cover gco
+
+select	statdate,
+		usercomp ,
+		company ,
+		receipt ,
+		"type" 
+from	usinsug01.premium_mo
+
+select  tgc.usercomp ,
+		tgc.company ,
+		tgc.currency ,
+		tgc.cover ,
+		tgc.descript 
+from  usinsug01.tab_gencov tgc
+
+select t.codigint 
+from usinsug01.table173 t 
+
+select 	ctp.ctid,
+		ctp.usercomp ,
+		ctp.company ,
+		ctp .companyc ,
+		ctp .branch ,
+		ctp .currency ,
+		ctp."number" ,
+		ctp.year_contr ,
+		ctp ."type" ,
+		ctp .nulldate ,
+		ctp ."share" ,
+		ctp .com_rate 
+from usinsug01.contr_comp ctp
 
 -----LPV
 
+select	dp0.commision,
+		dp0.usercomp,
+		dp0.company ,
+		dp0.receipt ,
+		dp0.certif ,
+		dp0.capital ,
+		dp0.type_detai ,
+		dp0.premium ,
+		dp0.compdate ,
+		dp0.code ,
+		dp0.bill_item 
+from	usinsuv01.detail_pre dp0
 
-select  claim,
-		operdate,
-		oper_type,
-		exchange,
-		transac
-from	usinsuv01.claim_his
+select 	aa.ctid,
+		aa.branch ,
+		aa.branch_pyg ,
+		aa.branch_bal ,
+		aa.product ,
+		aa.concept_fac 
+from usinsuv01.acc_autom2 aa 
 
-select	cpl.currency,
-		cpl.usercomp,
-		cpl.company,
-		cpl.certype,
-		cpl.branch,
-		cpl.policy,
-		cpl.certif
-from	usinsuv01.curren_pol cpl
+select  ili.quantity,
+		ili.usercomp,
+		ili.company ,
+		ili.certype ,
+		ili.branch ,
+		ili."policy" ,
+		ili.certif ,
+		ili.effecdate ,
+		ili.nulldate ,
+		ili.quantity 
+from    usinsuv01.insured_li ili
+
+select  sbs.cod_sbs_gyp,
+		sbs.usercomp ,
+		sbs.company ,
+		sbs.branch ,
+		sbs.product ,
+		sbs.effecdate ,
+		sbs.nulldate
+from    usinsuv01.product_sbs sbs
+
+select  as2.cod_sbs_bal ,
+		as2.cod_sbs_gyp 
+from usinsuv01.anexo1_sbs as2 
+
+select 	p.titularc ,
+		p.effecdate ,
+		p.usercomp ,
+		p.company ,
+		p.certype ,
+		p.compdate ,
+		p.bussityp ,
+		p.branch ,
+		p.leadshare ,
+		p.date_origi ,
+		p."policy" 	
+from usinsuv01."policy" p 
+
+select 	ctid,
+		type_cla,
+		usercomp ,
+		company ,
+		certype ,
+		branch ,
+		certif ,
+		effecdate ,
+		statusva 
+from usinsuv01.life_prev lp 
+
+select 	p.ctid,
+		p.product ,
+		p.usercomp ,
+		p.company ,
+		p.receipt ,
+		p.product ,
+		p.branch ,
+		p.expirdat ,
+		p.nulldate ,
+		p.statusva,
+		p.effecdate 
+from usinsuv01.premium p 
+
 
 select  pro.brancht,
-		pro.usercomp,
-		pro.company,
-		pro.branch,
-		pro.product,
-		pro.effecdate,
-		pro.nulldate
+		pro.usercomp ,
+		pro.company ,
+		pro.branch ,
+		pro.product ,
+		pro.effecdate ,
+		pro.nulldate 
 from    usinsuv01.product pro
-
-select  cov.capital,
-		cov.cover,
-		cov.modulec,
-		cov.currency,
-		cov.usercomp,
-		cov.company,
-		cov.certype,
-		cov.branch,
-		cov.policy,
-		cov.certif,
-		cov.effecdate,
-		cov.nulldate
-from    usinsuv01.cover cov
 
 select  ctid,
 		usercomp,
-		company,
+		company ,
 		branch,
 		product,
-		currency,
 		modulec,
 		cover,
 		effecdate,
 		nulldate,
+		currency ,
 		statregt,
-		addsuini
+		covergen 
 from	usinsuv01.gen_cover
 
+select  cov.cover ,
+		cov.currency ,
+		cov.usercomp ,
+		cov.company ,
+		cov.certype ,
+		cov.branch ,
+		cov."policy" ,
+		cov.certif ,
+		cov.effecdate ,
+		cov.nulldate 
+from    usinsuv01.cover cov
+
 select  ctid,
-		usercomp,
-		company,
-		branch,
+		usercomp ,
+		company ,
+		branch ,
 		product,
 		currency,
 		cover,
 		effecdate,
 		nulldate,
-		statregt,
-		addcapii
+		statregt
 from 	usinsuv01.life_cover
 
-select	ctid,
-		statusva
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate
-from	usinsuv01.life_prev
+select 	ch.exchange ,
+		ch.claim ,
+		ch.transac 
+from usinsuv01.claim_his ch 
+
+select 	c.usercomp ,
+		c.company ,
+		c.branch ,
+		c."policy" ,
+		c.staclaim ,
+		c.occurdat 
+from usinsuv01.claim c 
+
+select 	cmc .usercomp ,
+		cmc .company ,
+		cmc .claim ,
+		cmc .movement ,
+		cmc .cover ,
+		cmc .amount ,
+		cmc .currency 
+from usinsuv01.cl_m_cover cmc 
 
 
-select	ctid,
-		statusva
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate
-from	usinsuv01.life
+select  c.usercomp ,
+		c.company ,
+		c.certype ,
+		c.branch ,
+		c."policy" ,
+		c.effecdate ,
+		c.effecdate ,
+		c.nulldate ,
+		c.companyc ,
+		c.companyc, 
+		c."share" 
+from  usinsuv01.coinsuran c 
 
-select	ctid,
-		statusva
-		usercomp,
-		company,
-		certype,
-		branch,
-		policy,
-		certif,
-		effecdate,
-		nulldate
-from	usinsuv01.health
+select 	csp.transac,
+		csp.claim,
+		csp.transac_pay 
+from	usinsuv01.claim_pay_sap csp
 
-select	cer.statusva,
-		cer.payfreq,
-		cer.usercomp,
-		cer.company,
-		cer.certype,
-		cer.branch,
-		cer.policy,
-		cer.certif
-from 	usinsuv01.certificat cer
+select  cpl.currency,
+		cpl.usercomp ,
+		cpl.branch ,
+		cpl.certif,
+		cpl.certype,
+		cpl.company,
+		cpl.policy
+from    usinsuv01.curren_pol cpl
 
-select	coi.share,
-		coi.usercomp,
-		coi.company,
-		coi.certype,
-		coi.branch,
-		coi.policy,
-		coi.effecdate,
-		coi.nulldate,
-		coi.companyc
-from	usinsuv01.coinsuran coi
+select	cer.date_origi,
+		cer.usercomp, 
+		cer.company ,
+		cer.certype ,
+		cer.branch ,
+		cer.policy ,
+		cer.certif,
+		cer.date_origi
+from 	usinsuv01.certificat cer  
 
-
-select 	pol.ctid,
-		pol.certype,
-		pol.bussityp,
-		pol.leadshare,
-		pol.usercomp,
-        pol.company,
-        pol.branch,
-        pol.policy
-from    usinsuv01.policy pol
-
-select 	c.ctid,
-		c.claim,
-		c.certif,
-		c.client,
-		c.occurdat,
-		c.staclaim,
-		c.causecod,
-		c.usercomp, 
-	    c.company,  
-	    c.branch, 
-	    c.policy  
-from 	usinsug01.claim c 

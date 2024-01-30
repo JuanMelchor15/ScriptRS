@@ -1,8 +1,7 @@
 ---INSIS
---11 TABLAS
+--9 TABLAS
 
 --LPV
-
 
 select "MASTER_POLICY_ID" ,
 	   "POLICY_ID"
@@ -20,33 +19,32 @@ select  "AV_CURRENCY",
 		"POLICY_ID" ,
 		"OBJECT_ID" ,
 		"INSURED_VALUE",
-		"INSR_BEGIN",
-		"INSR_END"
+		cast (cast ("INSR_BEGIN" as date) as varchar),
+		cast (cast ("INSR_END"as date) as varchar)
 from	usinsiv01."INSURED_OBJECT"
 
 select  ann."POLICY_ID",	
-		ann."INSR_BEGIN",
+		cast (cast (ann."INSR_BEGIN" as date) as varchar),
 		ann."ANNEX_TYPE",
-		ann."POLICY_ID",
 		ann."ANNEX_STATE"
 from    usinsiv01."GEN_ANNEX" ann
 
 select	"CLAIM_ID",
 		"OP_TYPE",
-		"REGISTRATION_DATE",
+		cast (cast ("REGISTRATION_DATE" as date) as varchar),
 		"REQUEST_ID"
 from	usinsiv01."CLAIM_RESERVE_HISTORY"
 
 select 	c.ctid,
 		c."CLAIM_ID" ,
 		c."POLICY_ID" ,
-		c."EVENT_DATE" ,
+		cast (cast (c."EVENT_DATE"as date) as varchar) ,
 		c."CLAIM_REGID"
 from  	usinsiv01."CLAIM" c 
 
 select 	p.ctid,
 		p."POLICY_ID" ,
-		p."INSR_END", 
+		cast (cast (p."INSR_END"as date) as varchar), 
 		p."ATTR1" 
 from 	usinsiv01."POLICY" p 
 

@@ -4,7 +4,7 @@
 
 ---LPG 
 
-select	"DOPERDATE",
+select	cast (cast ( "DOPERDATE" as date ) as varchar) ,
 		"NCLAIM",
 		"NOPER_TYPE",
 		"NCASE_NUM" ,
@@ -34,32 +34,30 @@ select	cov."NCAPITAL",
 		cov."NPRODUCT",
 		cov."NPOLICY",
 		cov."NCERTIF",
-		cov."DEFFECDATE",
-		cov."DNULLDATE",
+		cast (cast (cov."DEFFECDATE" as date) as varchar),
+		cast (cast ( cov."DNULLDATE" as date) as varchar) ,
 		cov."NCOVER",
-		cov."NMODULEC",
-		cov."NBRANCH"
+		cov."NMODULEC"
 from    usvtimg01."COVER" cov
 
 select  gen."NCOVER",
 		gen."NPRODUCT",
 		gen."NMODULEC",
 		gen."NBRANCH",
-		gen."DEFFECDATE",
-		gen."DNULLDATE",
+		cast (cast (gen."DEFFECDATE" as date) as varchar),
+		cast (cast ( gen."DNULLDATE" as date) as varchar),
 		gen."SSTATREGT",
 		gen."SADDSUINI"
 from 	usvtimg01."LIFE_COVER" gen
 
 select 	coi."NSHARE",
-		coi."SCERTYPE",
-		coi."NBRANCH",
-		coi."NPRODUCT",
-		coi."NPOLICY",
-		coi."NCOMPANY",
-		coi."DEFFECDATE",
-		coi."DNULLDATE",
-		coi."NCOMPANY"
+        coi."SCERTYPE",
+        coi."NBRANCH",
+        coi."NPRODUCT",
+        coi."NPOLICY",
+        coi."NCOMPANY",
+        cast (cast (coi."DEFFECDATE"as date ) as varchar),
+        cast (cast (coi."DNULLDATE" as date ) as varchar)
 from	usvtimg01."COINSURAN" coi
 
 select  cpl."NCURRENCY",
@@ -87,7 +85,7 @@ select 	cla.ctid,
 		cla."SSTACLAIM",
 		cla."NPRODUCT",
 		cla."NCERTIF",
-		cla."DOCCURDAT",
+		cast (cast (cla."DOCCURDAT"as date ) as varchar),
 		cla."SCLIENT",
 		cla."NCAUSECOD"
 from 	usvtimg01."CLAIM" cla
@@ -113,7 +111,7 @@ from  	usvtimg01."CL_M_COVER" clm
 ----LPV
 
 
-select	"DOPERDATE",
+select	cast (cast ("DOPERDATE" as date) as varchar),
 		"NCLAIM",
 		"NOPER_TYPE",
 		"NCASE_NUM" ,
@@ -144,16 +142,16 @@ select	cov."NCAPITAL",
 		cov."NPRODUCT" ,
 		cov."NPOLICY" ,
 		cov."NCERTIF" ,
-		cov."DEFFECDATE" ,
-		cov."DNULLDATE"
+		cast (cast (cov."DEFFECDATE" as date) as varchar) ,
+		cast (cast (cov."DNULLDATE" as date) as varchar)
 from    usvtimv01."COVER" cov
 
 select 	lif."NCOVER",
 		lif."NPRODUCT" ,
 		lif."NMODULEC",
 		lif."NBRANCH" ,
-		lif."DEFFECDATE" ,
-		lif."DNULLDATE" ,
+		cast (cast (lif."DEFFECDATE" as date) as varchar) ,
+		cast (cast (lif."DNULLDATE" as date) as varchar) ,
 		lif."SSTATREGT" ,
 		lif."SADDSUINI"
 from 	usvtimv01."LIFE_COVER" lif
@@ -162,22 +160,21 @@ select	gen."NCOVER" ,
 		gen."NPRODUCT" ,
 		gen."NMODULEC" ,
 		gen."NBRANCH" ,
-		gen."DEFFECDATE" ,
-		gen."DNULLDATE" ,
+		cast (cast (gen."DEFFECDATE" as date) as varchar) ,
+		cast (cast (gen."DNULLDATE" as date) as varchar) ,
 		gen."SSTATREGT" ,
 		gen."SADDSUINI" 
 from    usvtimv01."GEN_COVER" gen   
 
 
 select 	coi."NSHARE",
-		coi."SCERTYPE" ,
-		coi."NBRANCH" ,
-		coi."NPRODUCT" ,
-		coi."NPOLICY" ,
-		coi."NCOMPANY" ,
-		coi."DEFFECDATE" ,
-		coi."DNULLDATE" ,
-		coi."NCOMPANY" 
+        coi."SCERTYPE" ,
+        coi."NBRANCH" ,
+        coi."NPRODUCT" ,
+        coi."NPOLICY" ,
+        coi."NCOMPANY" ,
+        cast (cast (coi."DEFFECDATE" as date) as varchar)  ,
+        cast (cast (coi."DNULLDATE"as date) as varchar)
 from	usvtimv01."COINSURAN" coi
 
 select  cpl."NCURRENCY",
@@ -205,7 +202,7 @@ select 	cla.ctid,
 		cla."SSTACLAIM",
 		cla."NPRODUCT",
 		cla."NCERTIF",
-		cla."DOCCURDAT",
+		cast (cast (cla."DOCCURDAT" as date) as varchar),
 		cla."SCLIENT",
 		cla."NCAUSECOD"
 from 	usvtimv01."CLAIM" cla
