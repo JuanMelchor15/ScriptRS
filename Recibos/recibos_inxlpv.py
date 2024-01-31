@@ -40,8 +40,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 ili."policy" ,
                                 ili.certif ,
                                 ili.effecdate ,
-                                ili.nulldate ,
-                                ili.quantity 
+                                ili.nulldate
                         from    usinsuv01.insured_li ili
                     ) AS TMP
                     '''
@@ -221,10 +220,8 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 c.branch ,
                                 c."policy" ,
                                 c.effecdate ,
-                                c.effecdate ,
                                 c.nulldate ,
                                 c.companyc ,
-                                c.companyc, 
                                 c."share" 
                         from  usinsuv01.coinsuran c 
                     ) AS TMP
@@ -260,8 +257,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 cer.certype ,
                                 cer.branch ,
                                 cer.policy ,
-                                cer.certif,
-                                cer.date_origi
+                                cer.certif
                         from 	usinsuv01.certificat cer  
                     ) AS TMP
                     '''

@@ -145,8 +145,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 c.effecdate ,
                                 c.nulldate ,
                                 c.companyc ,
-                                c."share" ,
-                                c.compdate
+                                c."share"
                         from usinsug01.coinsuran c 
                     ) AS TMP
                     '''
@@ -196,8 +195,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 cer.certype ,
                                 cer.branch ,
                                 cer.policy ,
-                                cer.certif,
-                                cer.date_origi
+                                cer.certif
                         from 	usinsug01.certificat cer 
                     ) AS TMP
                     '''
