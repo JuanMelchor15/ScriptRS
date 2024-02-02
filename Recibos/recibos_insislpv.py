@@ -5,7 +5,6 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                     select 	p.ctid,
                             p."POLICY_ID" ,
                             p."INSR_TYPE" ,
-                            p."ATTR1",
                             p."POLICY_NO" ,
                             p."ATTR4" ,
                             p."ATTR1" 
@@ -170,7 +169,6 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                             SELECT	"CLAIM_ID",
                                     "OP_TYPE",
                                     "REGISTRATION_DATE",
-                                    "OP_TYPE" ,
                                     "REQUEST_ID" ,
                                     "RESERV_AMNT" ,
                                     "RESERV_SEQ" 

@@ -41,9 +41,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 c."NPOLICY" ,
                                 c."NCERTIF" ,
                                 cast (cast (c."DOCCURDAT" as date) as varchar),
-                                c."SSTACLAIM" ,
-                                c."NBRANCH" ,
-                                c."NPOLICY" 
+                                c."SSTACLAIM"
                         from usvtimg01."CLAIM" c 
                     ) AS TMP
                     '''
@@ -73,7 +71,6 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                                 cast (cast (c."DEFFECDATE" as date) as varchar),
                                 cast (cast (c."DNULLDATE" as date) as varchar),
                                 cast (cast (c."DCOMPDATE" as date) as varchar),
-                                c."NCOMPANY" ,
                                 c."NSHARE" 
                         from usvtimg01."COINSURAN" c 
                     ) AS TMP
@@ -118,9 +115,7 @@ def generate_recibos_parquets(bucketName, config_dominio, glue_context, connecti
                     (
                         select 	csp."NTRANSAC",
                                 csp."NCLAIM" ,
-                                csp."NCASE_NUM" ,
-                                csp."NCASE_NUM" ,
-                                csp."NTRANSAC" 
+                                csp."NCASE_NUM"
                         from	usvtimg01."WBSTBLCLAIM_DOC_SAP"  csp
                     ) AS TMP
                     '''
